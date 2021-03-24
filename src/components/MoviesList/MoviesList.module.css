@@ -1,0 +1,16 @@
+.movieList {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  display: grid;
+  justify-content: center;
+  /* grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); */
+  grid-template-columns: repeat(4, 290px);
+  grid-gap: 18px;
+}
+
+.navigation {
+  text-decoration: none;
+  color: black;
+}

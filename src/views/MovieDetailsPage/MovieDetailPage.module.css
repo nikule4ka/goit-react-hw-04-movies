@@ -1,0 +1,50 @@
+.mainContainer {
+  margin: 0px 20px;
+}
+
+.btn {
+  margin-bottom: 10px;
+}
+
+.container {
+  display: flex;
+  margin-bottom: 30px;
+}
+.containerText {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+}
+
+.img {
+  display: block;
+  height: 600px;
+}
+
+.title {
+  font-size: 20px;
+}
+
+.titleDescr {
+  margin: 0;
+}
+
+.navigation {
+  list-style: none;
+  display: flex;
+}
+
+.link {
+  text-decoration: none;
+  font-style: 24px;
+  font-weight: 600;
+  color: white;
+  padding: 5px;
+  margin-top: 40px;
+  margin-right: 20px;
+  background-color: rosybrown;
+}
+
+.link:hover {
+  color: black;
+}
