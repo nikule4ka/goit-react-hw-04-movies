@@ -30,13 +30,12 @@ const MoviesList = ({ movies, location }) => {
 };
 
 MoviesList.propTypes = {
-  movies: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    poster_path: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    release_date: PropTypes.string.isRequired,
-    vote_average: PropTypes.string.isRequired,
-  }).isRequired,
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 export default withRouter(MoviesList);

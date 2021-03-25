@@ -1,11 +1,18 @@
-import React, { Component } from 'react';
-import Axios from 'axios';
+import React, { Component, Suspense, lazy } from 'react';
 import { NavLink, Route } from 'react-router-dom';
-import Cast from '../../components/Cast';
-import Reviews from '../../components/Reviews';
+import { movieDetails } from '../../services/apiMovie';
+
 import inkognito from '../../components/Cast/inkognito.jpeg';
 import s from './MovieDetailPage.module.css';
 import routes from '../../routes';
+
+const Cast = lazy(() =>
+  import('../../components/Cast' /* webpackChunkName: "cast" */),
+);
+
+const Reviews = lazy(() =>
+  import('../../components/Reviews' /* webpackChunkName: "reviews" */),
+);
 
 class MovieDetailsPage extends Component {
   state = {
@@ -17,14 +24,10 @@ class MovieDetailsPage extends Component {
   };
 
   async componentDidMount() {
-    const APIKey = 'ca6527f758dde8ca5b64b1585c945c26';
     const { movieId } = this.props.match.params;
 
-    const movie = await Axios.get(
-      `https://api.themoviedb.org/3/movie/${movieId}?api_key=${APIKey}`,
-    );
-    // console.log(movie.data);
-    this.setState({ ...movie.data });
+    const movie = await movieDetails(movieId);
+    this.setState({ ...movie });
   }
 
   handleGoBack = () => {
@@ -38,6 +41,7 @@ class MovieDetailsPage extends Component {
   render() {
     const { match } = this.props;
     const { poster_path, title, overview, genres } = this.state;
+
     const imgCheck = poster_path
       ? `https://image.tmdb.org/t/p/w500/${poster_path}`
       : inkognito;
@@ -54,7 +58,7 @@ class MovieDetailsPage extends Component {
           </div>
           <div className={s.containerText}>
             <h3 className={s.title}>{title}</h3>
-            <h4 className={s.titleDescr}> Overview</h4>
+
             <p>{overview}</p>
 
             {genres && (
@@ -83,8 +87,10 @@ class MovieDetailsPage extends Component {
           </li>
         </ul>
 
-        <Route path={`${match.path}/cast`} component={Cast} />
-        <Route path={`${match.path}/reviews`} component={Reviews} />
+        <Suspense fallback={<h4>Loading...</h4>}>
+          <Route path={`${match.path}/cast`} component={Cast} />
+          <Route path={`${match.path}/reviews`} component={Reviews} />
+        </Suspense>
       </div>
     );
   }

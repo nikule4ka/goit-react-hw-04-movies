@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Axios from 'axios';
 
 import MoviesList from '../components/MoviesList';
+import { trendsMovies } from '../services/apiMovie';
 
 class MoviesPage extends Component {
   state = {
@@ -9,13 +9,9 @@ class MoviesPage extends Component {
   };
 
   async componentDidMount() {
-    const APIKey = 'ca6527f758dde8ca5b64b1585c945c26';
-
-    const trendMovies = await Axios.get(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${APIKey}`,
-    );
+    const movies = await trendsMovies();
     // console.log(trendMovies.data);
-    this.setState({ movies: trendMovies.data.results });
+    this.setState({ movies });
   }
 
   render() {

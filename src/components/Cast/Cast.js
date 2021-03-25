@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Axios from 'axios';
+
 import s from './Cast.module.css';
 import inkognito from './inkognito.jpeg';
+import { castDetails } from '../../services/apiMovie';
 
 class Cast extends Component {
   state = {
@@ -10,14 +11,11 @@ class Cast extends Component {
   };
 
   async componentDidMount() {
-    const APIKey = 'ca6527f758dde8ca5b64b1585c945c26';
     const { movieId } = this.props.match.params;
 
-    const cast = await Axios.get(
-      `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${APIKey}`,
-    );
+    const cast = await castDetails(movieId);
     // console.log(cast.data.cast);
-    this.setState({ cast: cast.data.cast });
+    this.setState({ cast });
   }
 
   render() {
@@ -48,10 +46,14 @@ class Cast extends Component {
 }
 
 Cast.propTypes = {
-  credit_id: PropTypes.number.isRequired,
-  profile_path: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  character: PropTypes.string.isRequired,
+  cast: PropTypes.arrayOf(
+    PropTypes.shape({
+      credit_id: PropTypes.number.isRequired,
+      profile_path: PropTypes.string,
+      name: PropTypes.string.isRequired,
+      character: PropTypes.string.isRequired,
+    }),
+  ),
 };
 
 export default Cast;
