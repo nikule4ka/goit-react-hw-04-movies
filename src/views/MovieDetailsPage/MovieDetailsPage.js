@@ -41,6 +41,7 @@ class MovieDetailsPage extends Component {
   render() {
     const { match } = this.props;
     const { poster_path, title, overview, genres } = this.state;
+    const { location } = this.props;
 
     const imgCheck = poster_path
       ? `https://image.tmdb.org/t/p/w500/${poster_path}`
@@ -76,12 +77,24 @@ class MovieDetailsPage extends Component {
 
         <ul className={s.navigation}>
           <li>
-            <NavLink className={s.link} to={`${match.url}/cast`}>
+            <NavLink
+              className={s.link}
+              to={{
+                pathname: `${match.url}/cast`,
+                state: { ...location.state },
+              }}
+            >
               Cast
             </NavLink>
           </li>
           <li>
-            <NavLink className={s.link} to={`${match.url}/reviews`}>
+            <NavLink
+              className={s.link}
+              to={{
+                pathname: `${match.url}/reviews`,
+                state: { ...location.state },
+              }}
+            >
               Reviews
             </NavLink>
           </li>
